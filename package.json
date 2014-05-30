@@ -9,6 +9,7 @@
     "build": "browserify js/tron.js > bundle.js"
   },
   "dependencies": {
-    "r-array": "~0.5.2"
+    "r-array": "~0.5.2",
+    "string-hash-colour": "0.0.2"
   }
 }
