@@ -6,6 +6,9 @@
     "browserify": "^4.1.6"
   },
   "scripts": {
-    "build": "browserify js/*.js > bundle.js"
+    "build": "browserify js/tron.js > bundle.js"
+  },
+  "dependencies": {
+    "r-array": "~0.5.2"
   }
 }
