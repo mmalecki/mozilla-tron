@@ -1,26 +1,19 @@
 var degToRad = require('./deg-to-rad.js')
-var shc = require('string-hash-colour')
-
-function hashStringToColor(string) {
-  return shc.convert(string, { avoid: '#000000', proximity: 100 })
-}
 
 var Viewport = module.exports = function (canvas, data) {
 
   this.context = canvas.getContext('2d')
   this.data = data
-  this.data.push({ player: 'maciej', x: 1, y: 1 })
-  this.data.push({ player: 'maciej', x: 2, y: 2 })
 
   this.data.on('update', this._onDataUpdate.bind(this))
   window.addEventListener('resize', this._resizeCanvas.bind(this))
   window.addEventListener('deviceorientation', this._onOrientation.bind(this), true)
 
-  this._resizeCanvas()
-  this._requestAnimationFrame()
-
   this._maxX = this._maxY = -Infinity
   this._minX = this._minY = Infinity
+
+  this._resizeCanvas()
+  this._requestAnimationFrame()
 }
 
 Viewport.prototype._requestAnimationFrame = function () {
@@ -56,7 +49,7 @@ Viewport.prototype._resizeCanvas = function () {
 Viewport.prototype._drawMap = function () {
   this.data.forEach(function (point) {
     var coords = this._theirsToOurs(point)
-    this.context.fillStyle = hashStringToColor(point.player)
+    this.context.fillStyle = 'rgb(255, 255, 255)'
     this.context.arc(coords.x, coords.y, 10, 0, 2 * Math.PI)
     this.context.fill()
   }.bind(this))
