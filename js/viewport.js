@@ -19,7 +19,7 @@ var Viewport = module.exports = function (canvas, data) {
 
 Viewport.prototype._requestAnimationFrame = function () {
   this._redraw()
-  window.requestAnimationFrame(this._onAnimationFrameRequest.bind(this))
+  window.requestAnimationFrame(this._requestAnimationFrame.bind(this))
 }
 
 Viewport.prototype._onDataUpdate = function (update) {
