@@ -9,6 +9,8 @@ var Viewport = module.exports = function (canvas, data) {
 
   this.context = canvas.getContext('2d')
   this.data = data
+  this.data.push({ player: 'maciej', x: 1, y: 1 })
+  this.data.push({ player: 'maciej', x: 2, y: 2 })
 
   this.data.on('update', this._onDataUpdate.bind(this))
   window.addEventListener('resize', this._resizeCanvas.bind(this))
@@ -16,6 +18,9 @@ var Viewport = module.exports = function (canvas, data) {
 
   this._resizeCanvas()
   this._requestAnimationFrame()
+
+  this._maxX = this._maxY = -Infinity
+  this._minX = this._minY = Infinity
 }
 
 Viewport.prototype._requestAnimationFrame = function () {
@@ -24,6 +29,10 @@ Viewport.prototype._requestAnimationFrame = function () {
 }
 
 Viewport.prototype._onDataUpdate = function (update) {
+  if (update.x > this._maxX) this._maxX = update.x
+  if (update.y > this._maxY) this._maxY = update.y
+  if (update.x < this._minX) this._minX = update.x
+  if (update.y < this._minY) this._minY = update.y
 }
 
 Viewport.prototype._theirsToOurs = function (point) {
@@ -62,27 +71,4 @@ Viewport.prototype._redraw = function () {
   this._drawMap()
 
   this.context.restore()
-
-  var ary = this.data.toJSON()
-  var mX = 0, MX = 0, mY = 0, MY = 0
-  if(ary.length) {
-    mX = ary.reduce(function (a, b) {
-      return Math.min(a, b.x)
-    }, 99999999999)
-    mY = ary.reduce(function (a, b) {
-      return Math.min(a, b.y)
-    }, 99999999999)
-    MX = ary.reduce(function (a, b) {
-      return Math.max(a, b.x)
-    }, -99999999999)
-    MY = ary.reduce(function (a, b) {
-      return Math.max(a, b.y)
-    }, -99999999999)
-  }
-
-  this._minX = mX
-  this._minY = mY
-  this._maxX = MX
-  this._maxY = MY
-
 }
