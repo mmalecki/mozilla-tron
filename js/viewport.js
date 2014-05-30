@@ -31,8 +31,8 @@ Viewport.prototype._onDataUpdate = function () {
 
 Viewport.prototype._theirsToOurs = function (point) {
   return {
-    x: (point.x / (this._maxX - this._minX)) * this.width,
-    y: (point.y / (this._maxY - this._minY)) * this.height
+    x: (point.x / (this._maxX - this._minX)) * this.width - (this.width / 2),
+    y: (point.y / (this._maxY - this._minY)) * this.height - (this.height / 2)
   }
 }
 
