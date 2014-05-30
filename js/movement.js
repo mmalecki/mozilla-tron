@@ -4,20 +4,25 @@ var toM = 1800*60
 var movement = new RArray()
 var last = {}
 
-navigator.geolocation.watchPosition(function (pos) {
-  var coords = {
-    x: pos.coords.latitude*toM,
-    y: pos.coords.longitude*toM,
-    ts: Date.now()
-  }
+try {
 
-  if(coords.x != last.x || coords.y != last.y) {
-    console.log(JSON.stringify(coords))
-    console.log('movement?', movement)
-    movement.push(coords)
-  }
+  navigator.geolocation.watchPosition(function (pos) {
+    var coords = {
+      x: pos.coords.latitude*toM,
+      y: pos.coords.longitude*toM,
+      ts: Date.now()
+    }
 
-}, console.error.bind(console), {enableHighAccuracy: true})
+    if(coords.x != last.x || coords.y != last.y) {
+      console.log(JSON.stringify(coords))
+      console.log('movement?', movement)
+      movement.push(coords)
+    }
+
+  }, console.error.bind(console), {enableHighAccuracy: true})
 
 
+} catch (err) {
+  console.log(err)
+}
 module.exports = movement

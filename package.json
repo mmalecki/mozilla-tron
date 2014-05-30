@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "r-array": "~0.5.2",
-    "string-hash-colour": "0.0.2"
+    "string-hash-colour": "~0.0.2",
+    "shoe": "~0.0.15",
+    "ecstatic": "~0.5.3",
+    "reconnect": "~2.0.0"
   }
 }
