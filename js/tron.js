@@ -13,6 +13,6 @@ start()
 var reconnect = require('reconnect/shoe')
 
 reconnect(function (stream) {
-  stream.pipe(moves.createStream()).pipe(stream)
+  stream.pipe(data.createStream()).pipe(stream)
 }).connect('/shoe')
 
