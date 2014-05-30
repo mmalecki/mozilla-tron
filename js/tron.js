@@ -5,8 +5,5 @@ var canvas = document.getElementById('canvas')
 
 var moves = require('./movement')
 
-function start() {
-  var viewport = new Viewport(canvas, moves)
-}
-
-start()
+var data = new RArray()
+var viewport = new Viewport(canvas, data)
