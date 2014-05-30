@@ -1,16 +1,9 @@
 var degToRad = require('./deg-to-rad.js')
-var shc = require('string-hash-colour')
-
-function hashStringToColor(string) {
-  return shc.convert(string, { avoid: '#000000', proximity: 100 })
-}
 
 var Viewport = module.exports = function (canvas, data) {
 
   this.context = canvas.getContext('2d')
   this.data = data
-  this.data.push({ player: 'maciej', x: 1, y: 1 })
-  this.data.push({ player: 'maciej', x: 2, y: 2 })
 
   var self = this
   //pull the last update out of object...
@@ -21,11 +14,11 @@ var Viewport = module.exports = function (canvas, data) {
   window.addEventListener('resize', this._resizeCanvas.bind(this))
   window.addEventListener('deviceorientation', this._onOrientation.bind(this), true)
 
-  this._resizeCanvas()
-  this._requestAnimationFrame()
-
   this._maxX = this._maxY = -Infinity
   this._minX = this._minY = Infinity
+
+  this._resizeCanvas()
+  this._requestAnimationFrame()
 }
 
 Viewport.prototype._requestAnimationFrame = function () {
@@ -33,7 +26,8 @@ Viewport.prototype._requestAnimationFrame = function () {
   window.requestAnimationFrame(this._requestAnimationFrame.bind(this))
 }
 
-Viewport.prototype._onDataUpdate = function (update) {
+Viewport.prototype._onDataUpdate = function () {
+  var update = this.data.get(this.data.last())
   if (update.x > this._maxX) this._maxX = update.x
   if (update.y > this._maxY) this._maxY = update.y
   if (update.x < this._minX) this._minX = update.x
@@ -42,8 +36,8 @@ Viewport.prototype._onDataUpdate = function (update) {
 
 Viewport.prototype._theirsToOurs = function (point) {
   return {
-    x: (point.x / (this._maxX - this._minX)) * this.width,
-    y: (point.y / (this._maxY - this._minY)) * this.height
+    x: (point.x / (this._maxX - this._minX)) * this.width - (this.width / 2),
+    y: (point.y / (this._maxY - this._minY)) * this.height - (this.height / 2)
   }
 }
 
@@ -69,6 +63,7 @@ Viewport.prototype._drawMap = function () {
     //this.context.arc(coords.x, coords.y, 10, 0, 2 * Math.PI)
     console.log('COORDS', (point.x - mX)/xScale, (point.y - mY)*yScale)
     this.context.fillRect((point.x - mX)/xScale, (point.y - mY)/yScale, 10, 10)
+
     this.context.fill()
 
   }.bind(this))
