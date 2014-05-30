@@ -12,7 +12,12 @@ var Viewport = module.exports = function (canvas, data) {
   this.data.push({ player: 'maciej', x: 1, y: 1 })
   this.data.push({ player: 'maciej', x: 2, y: 2 })
 
-  this.data.on('update', this._onDataUpdate.bind(this))
+  var self = this
+  //pull the last update out of object...
+  this.data.on('_update', function (u) {
+    for(var k in u[0])
+      return self._onDataUpdate(u[0][k])
+  })
   window.addEventListener('resize', this._resizeCanvas.bind(this))
   window.addEventListener('deviceorientation', this._onOrientation.bind(this), true)
 
@@ -53,11 +58,19 @@ Viewport.prototype._resizeCanvas = function () {
 }
 
 Viewport.prototype._drawMap = function () {
+  var xScale = (this._maxX - this._minX)/ 600//this.context.canvas.width
+  var yScale = (this._maxY - this._minY)/ 400 //this.context.canvas.height
+  var mX = this._minX
+  var mY = this._minY
+  console.log('scale', xScale, yScale, mX, mY)
+
   this.data.forEach(function (point) {
-    var coords = this._theirsToOurs(point)
-    this.context.fillStyle = hashStringToColor(point.player)
-    this.context.arc(coords.x, coords.y, 10, 0, 2 * Math.PI)
+    this.context.fillStyle = 'red' //hashStringToColor(point.player)
+    //this.context.arc(coords.x, coords.y, 10, 0, 2 * Math.PI)
+    console.log('COORDS', (point.x - mX)/xScale, (point.y - mY)*yScale)
+    this.context.fillRect((point.x - mX)/xScale, (point.y - mY)/yScale, 10, 10)
     this.context.fill()
+
   }.bind(this))
 }
 
