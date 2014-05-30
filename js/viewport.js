@@ -28,7 +28,8 @@ Viewport.prototype._requestAnimationFrame = function () {
   window.requestAnimationFrame(this._requestAnimationFrame.bind(this))
 }
 
-Viewport.prototype._onDataUpdate = function (update) {
+Viewport.prototype._onDataUpdate = function () {
+  var update = this.data.get(this.data.last())
   if (update.x > this._maxX) this._maxX = update.x
   if (update.y > this._maxY) this._maxY = update.y
   if (update.x < this._minX) this._minX = update.x
