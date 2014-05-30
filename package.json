@@ -4,5 +4,8 @@
   "author": "Mad Science Collective",
   "devDependencies": {
     "browserify": "^4.1.6"
+  },
+  "scripts": {
+    "build": "browserify js/*.js > bundle.js"
   }
 }
