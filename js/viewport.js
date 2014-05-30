@@ -52,7 +52,7 @@ Viewport.prototype._drawMap = function () {
     this.context.fillStyle = hashStringToColor(point.player)
     this.context.arc(coords.x, coords.y, 10, 0, 2 * Math.PI)
     this.context.fill()
-  }, this)
+  }.bind(this))
 }
 
 Viewport.prototype._redraw = function () {
