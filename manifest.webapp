@@ -1,0 +1,19 @@
+{
+  "name": "mozillaTRON",
+  "description": "mozillaTRON",
+  "launch_path": "/index.html",
+  "developer": {
+    "name": "Dominic Tarr <dominic.tarr@gmail.com>",
+    "url": "https://github.com/dominictarr/fxos-hello-world"
+  },
+  "permissions": {
+    "geolocation": {}
+  },
+  "installs_allowed_from": [
+    "*"
+  ],
+  "icons": {
+    "128": "/style/icons/icon.png"
+  },
+  "orientation": "portrait-primary"
+}
